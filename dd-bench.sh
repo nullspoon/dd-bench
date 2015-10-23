@@ -98,9 +98,17 @@ function main {
 
   echo -e "Benchmark started at $(date)\n"
 
-  path=${1}
+  path="${1}"
 
   # Perform benchmark tests
+  log "*** Testing 1 KB blocks"
+  write_bench "${path}" "1K" "10240"
+  read_bench  "${path}" "1K" "10240"
+  write_bench "${path}" "1K" "81920"
+  read_bench  "${path}" "1K" "81920"
+  write_bench "${path}" "1K" "204800"
+  read_bench  "${path}" "1K" "204800"
+
   log "*** Testing 1 MB blocks"
   write_bench "${path}" "1M" "1024"
   read_bench  "${path}" "1M" "1024"
