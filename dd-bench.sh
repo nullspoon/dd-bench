@@ -101,13 +101,16 @@ function main {
   path="${1}"
 
   # Perform benchmark tests
+
+  # Note that the 1KB block tests write 10 and 80 megabyte files rather than
+  # the previous 1G, 8G, etc due to the speed of the typical 1KB block size
+  # test. Also note that the 200 MB test is skipped because it takes far too
+  # long.
   log "*** Testing 1 KB blocks"
   write_bench "${path}" "1K" "10240"
   read_bench  "${path}" "1K" "10240"
   write_bench "${path}" "1K" "81920"
   read_bench  "${path}" "1K" "81920"
-  write_bench "${path}" "1K" "204800"
-  read_bench  "${path}" "1K" "204800"
 
   log "*** Testing 1 MB blocks"
   write_bench "${path}" "1M" "1024"
@@ -140,16 +143,6 @@ function main {
   read_bench  "${path}" "1G" "8"
   write_bench "${path}" "1G" "20"
   read_bench  "${path}" "1G" "20"
-
-  # Note that the 1KB block tests write 10 and 80 megabyte files rather than
-  # the previous 1G, 8G, etc due to the speed of the typical 1KB block size
-  # test. Also note that the 200 MB test is skipped because it takes far too
-  # long.
-  log "*** Testing 1 KB blocks"
-  write_bench "${path}" "1K" "10240"
-  read_bench  "${path}" "1K" "10240"
-  write_bench "${path}" "1K" "81920"
-  read_bench  "${path}" "1K" "81920"
 
   # Attempt cleanup only if the destination test path is a file and not a
   # device (no sense in trying to remove a device).
